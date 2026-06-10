@@ -1,12 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Character Counter</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Character Counter</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container { text-align: center; width: 100%; max-width: 580px; }
+    h1 { color: #e0e0e0; font-size: 2rem; margin-bottom: 30px; letter-spacing: 1px; }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    label { display: block; color: #aaa; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; text-align: left; }
+    textarea {
+      width: 100%; padding: 16px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; color: #f0f0f0;
+      font-size: 1rem; resize: vertical; outline: none;
+      transition: border 0.2s; font-family: inherit;
+    }
+    textarea:focus { border-color: #00d4ff; }
+    textarea::placeholder { color: #555; }
+    .stats { display: flex; justify-content: center; align-items: center; margin-top: 30px; gap: 30px; }
+    .stat-box { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .stat-value { font-size: 3.5rem; font-weight: 800; color: #00d4ff; text-shadow: 0 0 20px rgba(0,212,255,0.4); }
+    .stat-label { color: #aaa; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; }
+    .divider { width: 1px; height: 60px; background: rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Live Character Counter</h1>
+    <div class="card">
+      <label for="textInput">Enter Text</label>
+      <textarea id="textInput" rows="6" placeholder="Start typing here..."></textarea>
+      <div class="stats">
+        <div class="stat-box">
+          <span class="stat-value" id="charCount">0</span>
+          <span class="stat-label">Characters</span>
+        </div>
+        <div class="divider"></div>
+        <div class="stat-box">
+          <span class="stat-value" id="wordCount">0</span>
+          <span class="stat-label">Words</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const textInput = document.getElementById('textInput');
+    const charCount = document.getElementById('charCount');
+    const wordCount = document.getElementById('wordCount');
+
+    textInput.addEventListener('input', function() {
+      const text = this.value;
+      charCount.textContent = text.length;
+      wordCount.textContent = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    });
+  </script>
+</body>
 </html>
